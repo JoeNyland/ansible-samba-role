@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include joenyland.samba"
+      include_role:
+        name: "joenyland.samba"
+      vars:
+        samba_shares:
+          tank:
+            path: /tank
+            valid_users: john
+            read_only: false

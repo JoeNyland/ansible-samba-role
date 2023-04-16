@@ -1,0 +1,23 @@
+---
+- name: Configure Samba
+  tags: samba
+  become: true
+  block:
+    - name: Install
+      apt:
+        name: samba
+        update_cache: true
+
+    - name: Configure
+      template:
+        dest: /etc/samba/smb.conf
+        src: smb.conf.j2
+        mode: '640'
+      notify: Reload Samba
+
+    - name: Configure service
+      service:
+        name: smbd
+        state: started
+        enabled: true
+      register: samba_service
